@@ -90,6 +90,65 @@ const processImageLabels = (storagePath, key) => {
         })
 }
 
+//  Generates thumbnails
+const generateThumbnail = (bucketObject) => {
+    const filePath = bucketObject.name;
+    const parsedPath = path.parse(bucketObject.name);
+    const fileName = parsedPath.base;
+
+    const bucket = storage.bucket(bucketObject.bucket);
+    const file = bucket.file(bucketObject.name); // File to process
+
+    const tempLocalDir = path.join(os.tmpdir(), parsedPath.dir);
+    const tempLocalFile = path.join(tempLocalDir, fileName); // File to write to
+
+    return mkDirAsync(tempLocalDir) // Download file
+        .then(() => {
+            return file.download({ destination: tempLocalFile });
+        })
+        .catch(err => {
+            console.error('Failed to download file.', err);
+            return Promise.reject(err);
+        })
+        .then(() => {
+            console.log(`${file.name} successfully downoaded to ${tempLocalFile}`);
+
+            return new Promise((resolve, reject) => { // Generate thumbnail
+                const escapedFile = tempLocalFile.replace(/(\s+)/g, '\\$1');
+                exec(`convert ${escapedFile} -thumbnail '200x200' ${escapedFile}`, { stdio: 'ignore' }, (err, stdout) => {
+                    if (err) {
+                        console.error('Failed to resize image!', err);
+                        reject();
+                    } else {
+                        resolve(stdout);
+                    }
+                });
+            });
+        })
+        .then(() => { // Upload thumbnail
+            console.log(`Image ${fileName} successfully resized to 200x200`);
+            const thumbnailFileName = path.join('thumbnails', fileName);
+
+            return bucket.upload(tempLocalFile, { destination: thumbnailFileName })
+                .catch((err) => {
+                    console.error('Failed to upload thumbnail.', err);
+                    return Promise.reject(err);
+                });
+        })
+        .then((newFileObject) => {
+            return new Promise((resolve, reject) => {
+                console.log('Unlinking file');
+                fs.unlink(tempLocalFile, (err) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(newFileObject);
+                    }
+                })
+            });
+        });
+}
+
 
 //  Makes directory if it doesn't exist
 const mkDirAsync = (dir) => {
