@@ -24,7 +24,6 @@ exports.deleteTagger = (data, context) => {
 
 tagger = (data, context) => {
     const object = data;
-    console.log(object);
 
     if (context.eventType === 'google.storage.object.delete') {
         object.resourceState = 'not_exists';
@@ -32,7 +31,12 @@ tagger = (data, context) => {
         object.resourceState = 'exists';
     }
 
-    if (!object.contentType.startsWith('image/')) {
+    const parsedPath = path.parse(object.name);
+
+    if (parsedPath.dir !== 'uploads') {
+        console.log('Only processing images from the upload folder');
+        return Promise.resolve();
+    } else if (!object.contentType.startsWith('image/')) {
         console.log('This is not an image');
         return Promise.resolve();
     }
@@ -55,9 +59,23 @@ const processLabels = (bucketObject) => {
                 return datastore.delete(key).then(() => {
                     console.log('Successfully deleted entity.');
                 });
+            } else if (bucketObject.resourceState === 'not_exists') {
+                return Promise.resolve();
             } else {
-                // Generate Thumbnail
-                // Generate Vision Labels
+                const labelPromise = processImageLabels(storagePath, key);
+                const thumbnailPromise = generateThumbnail(bucketObject);
+
+                return Promise.all([thumbnailPromise, labelPromise])
+                    .then((results) => {
+                        console.log(results);
+
+                        const entity = results[1];
+
+                        const thumbnailName = results[0][0].name;
+                        const thumbnailPath = `gs://${bucketObject.bucket}/${thumbnailName}`;
+                        entity.data.thumbnailPath = thumbnailPath;
+                        return datastore.save(entity);
+                    })
             }
 
         })
