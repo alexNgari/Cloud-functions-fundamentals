@@ -6,7 +6,7 @@ const projectId = 'cloud-functions-fundamentals';
 process.env.GCLOUD_PROJECT_ID = projectId;
 process.env.BUCKET_NAME = `${projectId}-packaging-data`;
 process.env.TOPIC_NAME = `packageTransaction`;
-process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'cloud-functions-fundamentals-61a189a22b74.json');
+process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, 'cloud-functions-fundamentals-b1befc6372c2.json');
 
 if (process.argv.length <= 2) {
     console.log(chalk.red(`Please include one parameter: 0, 1, or 2.  Type --help for more information.`));
