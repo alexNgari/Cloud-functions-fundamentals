@@ -1,0 +1,84 @@
+[
+    {
+        "title": "Waking Up! Episode 1",
+        "description": "You've woken up to a world of angry zombies in suits and ties and they are only craving two things...bagels and coffee! Fortunately for the world, you live right above the best bagel shop in New York City.  Run down stairs and go save the world!",
+        "packages": [
+            {
+                "title": "Cup of Joe",
+                "description": "Your excited about the game \"Waking up!\", and want to give a small donation to support our project.  Every little bit counts.  Thank you!",
+                "minimumCost": 3,
+                "pledges": 0,
+                "totalReceived": 0
+            },
+            {
+                "title": "1 Copy of \"The Making of Waking Up\"!",
+                "description": "You will receive one copy of \"Making Waking Up\"!",
+                "minimumCost": 15,
+                "pledges": 0,
+                "totalReceived": 0
+            },
+            {
+                "title": "1 Copy of Waking Up! Episode 1",
+                "description": "You will receive one copy of the game \"Waking Up!\" for Windows, macOS, and Linux.",
+                "minimumCost": 50,
+                "pledges": 0,
+                "totalReceived": 0
+            },
+            {
+                "title": "Waking Up with a Baker's Dozen",
+                "description": "13 Copies of the game \"Waking Up!\" Episode 1.  Be the coolest kid on the block and hand these out to all your friends",
+                "minimumCost": 550,
+                "pledges": 0,
+                "totalReceived": 0
+            },
+            {
+                "title": "Producer for \"Waking Up!\" Episdoe 1",
+                "description": "Your name will appear in the opening credits as one of the producers of \"Waking Up\".  In addition, you will receive the items from all other packages.",
+                "minimumCost": 10000,
+                "pledges": 0,
+                "totalReceived": 0
+            }
+        ]
+    },
+    {
+        "title": "Waking Up! Episode 2",
+        "description": "We already know you're going to love Episode 1 so much that we are starting the fundraising for Episode 2.  After your heroic efforts of saving New York City from the Zombie apocalypse you find out that the zombies are smarter than they first appeared.  They are burning wheat and coffee fields throughout the world, depriving you of precious ammunition.  Action gaming turns to real-time strategy as you must build and protect coffee and wheat fields around the world from impending doom.  Humanity is counting on your intellect!",
+        "packages": [
+            {
+                "title": "Pound of Beans",
+                "description": "Your excited about the game \"Waking up!\", and want to give a small donation to support our project.  Every little bit counts.  Thank you!",
+                "minimumCost": 7,
+                "pledges": 0,
+                "totalReceived": 0
+            },
+            {
+                "title": "1 Copy of \"Coffee Farming: The Definitive Guide\"!",
+                "description": "You just realized you had no idea where coffee actually comes from.  Fear no more, this book will tell you everything you need to know.",
+                "minimumCost": 15,
+                "pledges": 0,
+                "totalReceived": 0
+            },
+            {
+                "title": "1 Copy of Waking Up! Episode 2",
+                "description": "You will receive one copy of the game \"Waking Up!\" for Windows, macOS, and Linux.",
+                "minimumCost": 50,
+                "pledges": 0,
+                "totalReceived": 0
+            },
+            {
+                "title": "Waking Up with a Baker's Dozen",
+                "description": "13 Copies of the game \"Waking Up!\" Episode 2.  Be the coolest kid on the block and hand these out to all your friends",
+                "minimumCost": 550,
+                "pledges": 0,
+                "totalReceived": 0
+            },
+            {
+                "title": "Producer for \"Waking Up!\" Episode 2",
+                "description": "Your name will appear in the opening credits as one of the producers of \"Waking Up\".  In addition, you will receive the items from all other packages.",
+                "minimumCost": 10000,
+                "pledges": 0,
+                "totalReceived": 0
+            }
+        ]
+    }
+]
