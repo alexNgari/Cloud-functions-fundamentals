@@ -39,9 +39,9 @@ tagger = (data, context) => {
     } else if (!object.contentType.startsWith('image/')) {
         console.log('This is not an image');
         return Promise.resolve();
+    } else {
+        return processLabels(object);
     }
-
-    return processLabels(object);
 }
 
 
@@ -61,6 +61,9 @@ const processLabels = (bucketObject) => {
                 });
             } else if (bucketObject.resourceState === 'not_exists') {
                 return Promise.resolve();
+            } else if (objectExists) {
+                console.log('Duplicate entry');
+                return Promise.resolve();
             } else {
                 const labelPromise = processImageLabels(storagePath, key);
                 const thumbnailPromise = generateThumbnail(bucketObject);
@@ -74,6 +77,7 @@ const processLabels = (bucketObject) => {
                         const thumbnailName = results[0][0].name;
                         const thumbnailPath = `gs://${bucketObject.bucket}/${thumbnailName}`;
                         entity.data.thumbnailPath = thumbnailPath;
+                        console.log(entity);
                         return datastore.save(entity);
                     })
             }
