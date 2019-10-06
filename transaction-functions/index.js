@@ -6,14 +6,14 @@ exports.purchasePackage = (data, context) => {
     console.log(` ${context.eventId}.`);
 
     const pubSubMessage = data;
-    const stringData = Buffer.from(pubSubMessage.data, 'base64').toString();
-    const data = JSON.parse(stringData);
+    const dataString = Buffer.from(pubSubMessage.data, 'base64').toString();
+    const stringData = JSON.parse(dataString);
 
     const keyPath = [
         'Project',
-        datastore.int(data.projectId),
+        datastore.int(stringData.projectId),
         'Package',
-        datastore.int(data.packageId)
+        datastore.int(stringData.packageId)
     ];
     console.log(keyPath);
     const packageKey = datastore.int(keyPath);
