@@ -19,7 +19,7 @@ const publisher = pubsub.topic(process.env.TOPIC_NAME, {
     },
 });
 
-const invocations = [5, 4, 3, 2, 1].map(x => x * 3);
+const invocations = [5, 4, 3, 2, 1].map(x => x * 1);
 
 let promises = [];
 
