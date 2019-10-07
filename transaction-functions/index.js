@@ -16,7 +16,9 @@ exports.purchasePackage = (data, context) => {
         datastore.int(stringData.packageId)
     ];
     console.log(keyPath);
-    const packageKey = datastore.int(keyPath);
+    const packageKey = datastore.key(keyPath);
+    // console.log(`packageKey: ${packageKey}`);
+
 
     return datastore.get(packageKey).then(results => {
         const entity = results[0];
