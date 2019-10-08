@@ -15,20 +15,19 @@ exports.purchasePackage = (data, context) => {
 
     const pubSubMessage = data;
     const dataString = Buffer.from(pubSubMessage.data, 'base64').toString();
-    const stringData = JSON.parse(dataString);
 
     const bucket = storage.bucket(BUCKET_NAME);
     const fileName = `${context.eventId}.json`;
     const tmpFilePath = path.join(os.tmpdir(), fileName);
 
     return new Promise((resolve, reject) => {
-            fs.writeFile(tmpFilePath, stringData, (err) => {
+            fs.writeFile(tmpFilePath, dataString, (err) => {
                 if (err) {
                     console.error('Failed to write to the tmp dir', err);
                     reject(err);
                 } else {
                     console.log(`Temp file created for ${tmpFilePath}.`);
-                    resolve;
+                    resolve();
                 }
             });
         })
