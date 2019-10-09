@@ -1,6 +1,6 @@
 const chalk = require('chalk');
-const Datastore = require('@google-cloud/datastore');
-const Storage = require('@google-cloud/storage');
+const { Datastore } = require('@google-cloud/datastore');
+const { Storage } = require('@google-cloud/storage');
 const testData = require('./testData.json');
 
 const projectId = process.env.GCLOUD_PROJECT_ID;
