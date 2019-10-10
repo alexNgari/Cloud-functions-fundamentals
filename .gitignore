@@ -3,3 +3,4 @@
 node_modules
 images
 client-app/cloud-functions-fundamentals-b1befc6372c2.json
+logging-functions/mailgunKey.json
