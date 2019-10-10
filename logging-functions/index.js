@@ -35,6 +35,8 @@ exports.logSummary = (req, res) => {
 
         let text = `Here is the Cloud Functions log report for ${yesterdayTitle}. \n\n`;
 
+        const logData = {};
+
         if (rows.length === 0) {
             text += "No functions were invoked yesterday. Keep building and dploying!";
         } else {
@@ -44,6 +46,17 @@ exports.logSummary = (req, res) => {
                 const region = row['region'];
 
                 text += `${functionName} ran ${total} times in region ${region}. \n`;
+
+                if (region in logData) {
+                    data[region][functionName] = {
+                        count: total
+                    }
+                } else {
+                    data[region] = {};
+                    data[region][functionName] = {
+                        count: total
+                    }
+                }
             });
         }
 
@@ -61,11 +74,52 @@ exports.logSummary = (req, res) => {
         mailgun.messages().send(data, (error, body) => {
             if (error) {
                 console.error('Email sending failed', error);
-                res.status(500).send('Error sending email.');
             } else {
                 console.log(body);
-                res.status(200).send('Email sent!');
             }
-        });
-    })
+        })
+
+        const loggingPromise = customLog(data)
+            .then(() => {
+                console.log('successful log');
+            })
+            .catch(err => {
+                console.error(err);
+            });
+
+        Promise.all([loggingPromise])
+            .then(() => {
+                res.status(200).send('Logging successful. Email sent!.');
+            })
+            .catch(err => {
+                res.status(500).send('An error occured when trying to send the report.');
+            })
+    });
+}
+
+
+const customLog = (logData) => {
+    const log = logging.log('analytics-log');
+
+    console.log(process.env);
+
+    const resource = {
+        type: 'cloud_function',
+        labels: {
+            function_name: process.env.FUNCTION_NAME,
+            region: process.env.FUNCTION_REGION
+        }
+    }
+
+    const entry = log.entry({
+            resource: resource,
+            labels: {
+                category: 'cron-job'
+            },
+            severity: 'DEBUG'
+        },
+        logData
+    )
+
+    return log.write(entry);
 }
